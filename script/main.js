@@ -40,7 +40,7 @@ map.on("overlayadd", function(e) {
 
 (async () => {
 
-    let mapsRes = await fetch("/maps.json");
+    let mapsRes = await fetch("/config/maps.json");
     let mapsData = await mapsRes.json();
 
     firstLayer = true;
@@ -65,7 +65,7 @@ map.on("overlayadd", function(e) {
         layerControl.addBaseLayer(mapLayer, mapInfo["name"]);
     });
 
-    let overlayRes = await fetch("/overlays.json");
+    let overlayRes = await fetch("/config/overlays.json");
     let overlayData = await overlayRes.json();
 
     overlayData.forEach(mapInfo => {
