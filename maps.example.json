@@ -1,0 +1,8 @@
+[
+    {
+        "name": "BaseMapDE",
+        "url": "/map/basemap/{z}/{x}/{y}.png",
+        "minZoom": 10,
+        "maxZoom": 19
+    }
+]

@@ -1,0 +1,8 @@
+[
+    {
+        "name": "Overlay",
+        "url": "/overlay/example/{z}/{x}/{y}.png",
+        "minZoom": 10,
+        "maxZoom": 20
+    }
+]
