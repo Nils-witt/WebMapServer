@@ -1,0 +1,16 @@
+extends ../layout
+
+
+block content    
+    table
+        tr
+            th='Status'
+            th='Name'
+            th='Path'
+        each val in values.length ? values : ['There are no values']
+            tr
+                td=val.status
+                td=val.name
+                td=val.path
+                td
+                    a(href='/overlays/'+ val.id)='Edit'

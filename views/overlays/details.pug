@@ -1,0 +1,10 @@
+extends ../layout
+
+
+block content
+    a(href='/overlays')='Back'
+    h1=overlay.name
+    p='Path: ' + overlay.path
+    form(method='post', action='/overlays/' + overlay.id + '/upload', enctype="multipart/form-data")
+        input(type='file', name='datazip')
+        button(type='submit')='Hochladen'

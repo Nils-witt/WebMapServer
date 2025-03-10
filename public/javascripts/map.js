@@ -7,15 +7,6 @@ var layerControl = L.control.layers({}, {}).addTo(map);
 new L.Control.SimpleLocate({
     position: "topleft",
     className: "button-locate",
-    afterClick: (result) => {
-        // Do something after the button is clicked.
-    },
-    afterMarkerAdd: () => {
-        // Do something after the marker (displaying the device's location and orientation) is added.
-    },
-    afterDeviceMove: (event) => {
-        // Do something after the device moves.
-    }
 }).addTo(map);
 
 var visibleLayers = [];
@@ -53,13 +44,13 @@ map.on("baselayerchange", function (e) {
 
 (async () => {
 
-    let mapsRes = await fetch("/maps");
+    let mapsRes = await fetch("/api/maps");
     let mapsData = await mapsRes.json();
 
     firstLayer = true;
 
     mapsData.forEach(mapInfo => {
-        let mapLayer = L.tileLayer(mapInfo["url"], {
+        let mapLayer = L.tileLayer(`/map/${mapInfo["id"]}/${mapInfo["path"]}`, {
             maxZoom: mapInfo["maxZoom"],
             minZoom: mapInfo["minZoom"],
             attribution: '© BaseMao'
@@ -78,11 +69,11 @@ map.on("baselayerchange", function (e) {
         layerControl.addBaseLayer(mapLayer, mapInfo["name"]);
     });
 
-    let overlayRes = await fetch("/overlays");
+    let overlayRes = await fetch("/api/overlays");
     let overlayData = await overlayRes.json();
 
     overlayData.forEach(mapInfo => {
-        let mapLayer = L.tileLayer(mapInfo["url"], {
+        let mapLayer = L.tileLayer(`/overlay/${mapInfo["id"]}/${mapInfo["path"]}`, {
             maxZoom: mapInfo["maxZoom"],
             minZoom: mapInfo["minZoom"],
             attribution: '©'
