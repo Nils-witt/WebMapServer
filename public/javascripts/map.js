@@ -4,6 +4,19 @@ map.setMinZoom(10);
 
 var layerControl = L.control.layers({}, {}).addTo(map);
 
+new L.Control.SimpleLocate({
+    position: "topleft",
+    className: "button-locate",
+    afterClick: (result) => {
+        // Do something after the button is clicked.
+    },
+    afterMarkerAdd: () => {
+        // Do something after the marker (displaying the device's location and orientation) is added.
+    },
+    afterDeviceMove: (event) => {
+        // Do something after the device moves.
+    }
+}).addTo(map);
 
 var visibleLayers = [];
 var baseLayerName = localStorage.getItem('baseLayerName');
