@@ -7,11 +7,11 @@ import {PostgresDialect} from "@sequelize/postgres";
 
 export const sequelize = new Sequelize({
     dialect: PostgresDialect,
-    database: 'postgres',
-    host: 'localhost',
-    user: 'postgres',
-    password: 'postgres',
-    port: 5432,
+    database: process.env.DATABASE_NAME,
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    port: parseInt(process.env.DATABASE_PORT || "5432"),
     models: [User, MapModel, OverlayModel],
 });
 
