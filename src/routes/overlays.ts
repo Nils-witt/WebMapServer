@@ -5,8 +5,6 @@ import {applicationLogger} from "../Logger";
 import * as fs from "node:fs";
 import * as yauzl from "yauzl";
 import path from "node:path";
-import {MapModel} from "../models/MapModel";
-import {mapsRouter} from "./maps";
 
 const upload = multer({dest: 'uploads/'})
 
@@ -46,15 +44,11 @@ overlaysRouter.post('/:id/upload', upload.single('datazip'), async (req, res, ne
     } else {
         let file = req.file;
         if (file.mimetype == 'application/zip') {
-            let zipName = 'data/' + req.params.id + '.zip'
-            fs.rename(file.path, zipName, (err) => {
-            })
-
             let basedir = path.join('data/overlay', req.params.id);
             fs.mkdirSync(basedir, {
                 recursive: true,
             });
-            yauzl.open(zipName, {lazyEntries: true}, (err, zipfile) => {
+            yauzl.open(file.path, {lazyEntries: true}, (err, zipfile) => {
                 zipfile.readEntry();
                 zipfile.on("entry", (entry) => {
 
