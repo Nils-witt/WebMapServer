@@ -3,10 +3,10 @@ extends ../layout
 
 block content
     a(href='/maps')='Back'
-    h1=overlay.name
-    p='Path: ' + overlay.path
-    p='Minzoom: ' + overlay.minZoom
-    p='Maxzoom: ' + overlay.maxZoom
-    form(method='post', action='/overlays/' + overlay.id + '/upload', enctype="multipart/form-data")
+    h1=map.name
+    p='Path: ' + map.path
+    p='Minzoom: ' + map.minZoom
+    p='Maxzoom: ' + map.maxZoom
+    form(method='post', action='/maps/' + map.id + '/upload', enctype="multipart/form-data")
         input(type='file', name='datazip')
         button(type='submit')='Hochladen'

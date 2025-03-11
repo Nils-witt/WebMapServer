@@ -27,6 +27,22 @@ mapsRouter.post('/create', async (req, res, next) => {
 });
 
 mapsRouter.get('/:id', async (req, res, next) => {
-    let overlay = await MapModel.findByPk(req.params.id);
-    res.render('maps/details', {overlay: overlay});
+    let map = await MapModel.findByPk(req.params.id);
+    res.render('maps/details', {map: map});
 });
+mapsRouter.post('/:id', async (req, res, next) => {
+    let map = await MapModel.findByPk(req.params.id);
+    if (map instanceof MapModel) {
+        map.name = req.body.name;
+        map.path = req.body.path;
+        map.minZoom = req.body.minZoom;
+        map.maxZoom = req.body.maxZoom;
+    }
+    res.render('maps/details', {map: map});
+});
+mapsRouter.delete('/:id', async (req, res, next) => {
+    let map = await MapModel.findByPk(req.params.id);
+    map?.destroy();
+    res.redirect('/maps/');
+});
+

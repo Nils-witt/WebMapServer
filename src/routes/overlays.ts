@@ -5,6 +5,7 @@ import {applicationLogger} from "../Logger";
 import * as fs from "node:fs";
 import * as yauzl from "yauzl";
 import path from "node:path";
+import {MapModel} from "../models/MapModel";
 
 const upload = multer({dest: 'uploads/'})
 
@@ -13,6 +14,16 @@ export const overlaysRouter = Router()
 overlaysRouter.get('/', async (req, res, next) => {
     let overlays = await OverlayModel.findAll();
     res.render('overlays/index', {values: overlays})
+});
+overlaysRouter.post('/create', async (req, res, next) => {
+    let overlayModel = await OverlayModel.create({
+        name: req.body.name,
+        path: req.body.path,
+        minZoom: req.body.minZoom,
+        maxZoom: req.body.maxZoom,
+        status: 'Created',
+    })
+    res.redirect('/overlays/' + overlayModel.id);
 });
 
 overlaysRouter.get('/:id', async (req, res, next) => {
@@ -30,7 +41,8 @@ overlaysRouter.post('/:id/upload', upload.single('datazip'), async (req, res, ne
         let file = req.file;
         if (file.mimetype == 'application/zip') {
             let zipName = 'data/' + req.params.id + '.zip'
-            fs.rename(file.path, zipName, (err) => {})
+            fs.rename(file.path, zipName, (err) => {
+            })
 
             let basedir = path.join('data/overlay', req.params.id);
             fs.mkdirSync(basedir, {
