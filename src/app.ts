@@ -8,6 +8,7 @@ import {populate, sequelize} from "./Database";
 import session from "express-session";
 import {applicationLogger} from "./Logger";
 import {apiRouter} from "./routes/api";
+import {mapsRouter} from "./routes/maps";
 
 export const app: Express = express();
 
@@ -32,6 +33,7 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 app.use('/overlays', overlaysRouter);
+app.use('/maps', mapsRouter);
 app.use('/users', userRouter);
 
 // catch 404 and forward to error handler
