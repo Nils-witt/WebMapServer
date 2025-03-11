@@ -6,6 +6,7 @@ import * as fs from "node:fs";
 import * as yauzl from "yauzl";
 import path from "node:path";
 import {MapModel} from "../models/MapModel";
+import {mapsRouter} from "./maps";
 
 const upload = multer({dest: 'uploads/'})
 
@@ -15,6 +16,11 @@ overlaysRouter.get('/', async (req, res, next) => {
     let overlays = await OverlayModel.findAll();
     res.render('overlays/index', {values: overlays})
 });
+
+overlaysRouter.get('/create', async (req, res, next) => {
+    res.render('overlays/create');
+});
+
 overlaysRouter.post('/create', async (req, res, next) => {
     let overlayModel = await OverlayModel.create({
         name: req.body.name,
