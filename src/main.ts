@@ -1,12 +1,13 @@
 import {app} from "./app";
 import * as http from "node:http";
 import {applicationLogger} from "./Logger";
-
-
+import {SyncClient} from "./syncClient";
+import {config} from "./config";
+import {EdpClient} from "./edpClient";
 
 
 applicationLogger.info("Starting server");
-
+console.log(config)
 /**
  * Get port from environment and store in Express.
  */
@@ -27,6 +28,19 @@ const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+const syncClient = new SyncClient();
+
+if (config.sync) {
+    syncClient.start();
+}
+
+const edpClient = new EdpClient();
+
+if (config.edpSync){
+    edpClient.start();
+}
+
 
 /**
  * Normalize a port into a number, string, or false.

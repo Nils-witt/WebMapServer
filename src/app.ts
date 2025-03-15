@@ -9,6 +9,7 @@ import session from "express-session";
 import {applicationLogger} from "./Logger";
 import {apiRouter} from "./routes/api";
 import {mapsRouter} from "./routes/maps";
+import {config} from "./config";
 
 export const app: Express = express();
 
@@ -23,8 +24,7 @@ app.use(session({
     secret: 'test'
 }))
 app.use(express.static(path.join(__dirname, '..', 'public')));
-app.use(express.static(path.join(__dirname, '..', 'data')));
-
+app.use(express.static(config.datadir));
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
     applicationLogger.info(req.method + " " + req.url);
     next()

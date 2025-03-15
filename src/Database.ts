@@ -4,6 +4,7 @@ import {OverlayModel} from "./models/OverlayModel";
 import {MapModel} from "./models/MapModel";
 import {applicationLogger} from "./Logger";
 import {PostgresDialect} from "@sequelize/postgres";
+import {UnitModel} from "./models/UnitModel";
 
 export const sequelize = new Sequelize({
     dialect: PostgresDialect,
@@ -12,7 +13,7 @@ export const sequelize = new Sequelize({
     user: process.env.DATABASE_USER || "postgres",
     password: process.env.DATABASE_PASSWORD || "postgres",
     port: parseInt(process.env.DATABASE_PORT || "5432"),
-    models: [User, MapModel, OverlayModel],
+    models: [User, MapModel, OverlayModel, UnitModel],
 });
 
 export async function populate() {

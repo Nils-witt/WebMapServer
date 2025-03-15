@@ -7,3 +7,11 @@ services:
       - ./data/pg:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgres
+  mysql:
+    image: mariadb
+    ports:
+      - 127.0.0.1:3306:3306
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: example
