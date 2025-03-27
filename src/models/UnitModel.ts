@@ -16,8 +16,8 @@ export class UnitModel extends Model<InferAttributes<UnitModel>, InferCreationAt
     @Attribute(DataTypes.INTEGER)
     declare status: number;
     
-    @Attribute(DataTypes.STRING)
-    declare tz: string
+    @Attribute(DataTypes.JSON)
+    declare tz: any
     
     @Attribute(DataTypes.FLOAT)
     declare latitude: number;

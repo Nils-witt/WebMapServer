@@ -10,6 +10,8 @@ import {applicationLogger} from "./Logger";
 import {apiRouter} from "./routes/api";
 import {mapsRouter} from "./routes/maps";
 import {config} from "./config";
+import cors from "cors";
+import {unitRouter} from "./routes/units";
 
 export const app: Express = express();
 
@@ -17,6 +19,7 @@ export const app: Express = express();
 app.set('views', path.join(__dirname, '..', 'views'));
 app.set('view engine', 'pug');
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -35,6 +38,7 @@ app.use('/api', apiRouter);
 app.use('/overlays', overlaysRouter);
 app.use('/maps', mapsRouter);
 app.use('/users', userRouter);
+app.use('/units', unitRouter);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {

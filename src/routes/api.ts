@@ -28,6 +28,12 @@ apiRouter.get('/units', async (req, res, next) => {
     res.json(units);
 });
 
+
+apiRouter.get('/units/:id', async (req, res, next) => {
+    let unit = await UnitModel.findByPk(req.params.id);
+    res.json(unit);
+});
+
 apiRouter.get('/units/:id/tz', async (req, res, next) => {
     let unit = await UnitModel.findByPk(req.params.id);
     if (unit == null) {
@@ -47,8 +53,7 @@ apiRouter.post('/units/:id/tz', async (req, res, next) => {
     if (unit == null) {
         res.status(400).send({})
     }else {
-        console.log()
-        unit.tz = JSON.stringify(data);
+        unit.tz = data;
         await unit.save();
     }
     res.send(data)

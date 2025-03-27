@@ -1,0 +1,38 @@
+extends ../layout
+
+
+block content
+    a(href='/overlays')='Back'
+    h1=unit.name + ' (' + unit.status + ')'
+    
+    h2='Taktische Informationen'
+    p='Grundzeichen: ' + unit.tz.grundzeichen
+    select
+        each val in grundzeichen
+            if val.id == unit.tz.grundzeichen
+                option(selected=true)= val.id
+            else
+                option= val.id
+    p='Ebene: ' + unit.tz.einheit
+    select
+        each val in einheiten
+            if val.id == unit.tz.einheit
+                option(selected=true)= val.id
+            else
+                option= val.id
+    p='Organisation: ' + unit.tz.organisation
+    select
+        each val in organisationen
+            if val.id == unit.tz.organisation
+                option(selected=true)= val.id
+            else
+                option= val.id
+    p='Fachaufgabe: ' + unit.tz.fachaufgabe
+    select
+        each val in fachaufgaben
+            if val.id == unit.tz.fachaufgabe
+                option(selected=true)= val.id
+            else
+                option= val.id
+    p='Name: ' + unit.tz.name
+    
