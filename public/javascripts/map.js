@@ -1,6 +1,23 @@
-var map = L.map('map').setView([50.703546, 7.127326], 14);
-map.setMaxZoom(20);
+var map = L.map('map');
+map.setView([50.703546, 7.127326], 14)
+map.setMaxZoom(22);
 map.setMinZoom(10);
+
+
+(async () => {
+    
+    try {
+        let mapZoom = localStorage.getItem('mapZoom');
+        let mapCenter = JSON.parse(localStorage.getItem('mapCenter'));
+        if (mapZoom != null && mapCenter != null) {
+            map.setView([mapCenter["lat"], mapCenter["lng"]], parseInt(mapZoom));
+        }
+    } catch (error) {
+        console.log("Could not load from localstore");
+    }
+    
+    
+})();
 
 var layerControl = L.control.layers({}, {}).addTo(map);
 
@@ -41,6 +58,12 @@ map.on("overlayremove", function (e) {
 map.on("baselayerchange", function (e) {
     localStorage.setItem('baseLayerName', e.name);
 }, 1);
+
+
+map.on('moveend', function () {
+    localStorage.setItem('mapCenter', JSON.stringify(map.getCenter()));
+    localStorage.setItem('mapZoom', map.getZoom());
+},1);
 
 (async () => {
 
