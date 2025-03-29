@@ -1,6 +1,7 @@
 import {createPool} from "mariadb";
 import {config} from "./config";
 import {UnitModel} from "./models/UnitModel";
+import {applicationLogger} from "./Logger";
 
 const pool = createPool({
     host: config.edpHost,
@@ -33,6 +34,7 @@ export class EdpClient {
         let remUnits = await getUnits();
 
         for await (const unit of remUnits) {
+            applicationLogger.info("EDP Client: Sync unit: " + unit.name);
             let locUnits = await UnitModel.findAll({
                 where: {
                     name: unit.name,
@@ -60,6 +62,7 @@ export class EdpClient {
     }
 
     start() {
+        applicationLogger.info("EDP Client started");
         this.syncUnits();
     }
     

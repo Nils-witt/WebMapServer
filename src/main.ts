@@ -4,13 +4,33 @@ import {applicationLogger} from "./Logger";
 import {SyncClient} from "./syncClient";
 import {config} from "./config";
 import {EdpClient} from "./edpClient";
+import {populate, sequelize} from "./Database";
 
 
 applicationLogger.info("Starting server");
-console.log(config)
 /**
  * Get port from environment and store in Express.
  */
+const syncClient = new SyncClient();
+const edpClient = new EdpClient();
+
+sequelize.sync().then(() => {
+    applicationLogger.info("Database synced successfully");
+    populate()
+
+    if (config.sync) {
+        syncClient.start();
+    }
+
+    if (true){
+        edpClient.start();
+    }
+})
+
+
+
+
+
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
@@ -28,18 +48,6 @@ const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
-const syncClient = new SyncClient();
-
-if (config.sync) {
-    syncClient.start();
-}
-
-const edpClient = new EdpClient();
-
-if (config.edpSync){
-    edpClient.start();
-}
 
 
 /**

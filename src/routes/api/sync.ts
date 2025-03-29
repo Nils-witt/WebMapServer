@@ -1,18 +1,17 @@
 import {Router} from "express";
-import {MapModel} from "../models/MapModel";
-import {OverlayModel} from "../models/OverlayModel";
+import {MapModel} from "../../models/MapModel";
+import {OverlayModel} from "../../models/OverlayModel";
 import * as fs from "node:fs";
-import {config} from "../config";
+import {config} from "../../config";
 import path from "node:path";
 
 
-export const apiSyncRouter = Router()
+export const apiSyncRouter = Router();
 
-/* GET home page. */
 apiSyncRouter.get('/', async (req, res, next) => {
     let maps = await MapModel.findAll();
     let overlays = await OverlayModel.findAll();
-    
+
     res.json({
         maps: maps,
         overlays: overlays,

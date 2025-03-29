@@ -2,16 +2,12 @@ import path from "node:path";
 import express, {Express, NextFunction, Request, Response} from "express";
 import {indexRouter} from "./routes";
 import cookieParser from "cookie-parser";
-import {overlaysRouter} from "./routes/overlays";
-import {userRouter} from "./routes/users";
 import {populate, sequelize} from "./Database";
 import session from "express-session";
 import {applicationLogger} from "./Logger";
 import {apiRouter} from "./routes/api";
-import {mapsRouter} from "./routes/maps";
 import {config} from "./config";
 import cors from "cors";
-import {unitRouter} from "./routes/units";
 
 export const app: Express = express();
 
@@ -35,18 +31,10 @@ app.use((req: express.Request, res: express.Response, next: express.NextFunction
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
-app.use('/overlays', overlaysRouter);
-app.use('/maps', mapsRouter);
-app.use('/users', userRouter);
-app.use('/units', unitRouter);
+// app.use('/overlays', overlaysRouter);
+// app.use('/maps', mapsRouter);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.status(404).send('Not Found');
 });
-
-
-sequelize.sync().then(() => {
-    applicationLogger.info("Database synced successfully");
-    populate()
-})
