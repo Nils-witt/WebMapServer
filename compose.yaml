@@ -1,17 +1,22 @@
 services:
+  map:
+    build: .
+    ports:
+      - 3000:3000
+    restart: always
+    volumes:
+      - "${DATADIR:-./data/}mapserver/:/app/data/"
+    depends_on:
+      - db
+    environment:
+      DATABASE_NAME: postgres
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_HOST: db
   db:
     image: postgres
-    ports: 
-      - 127.0.0.1:5432:5432
+    restart: always
     volumes:
-      - ./data/pg:/var/lib/postgresql/data
+      - ${DATADIR:-./data/}/pg:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgres
-  mysql:
-    image: mariadb
-    ports:
-      - 127.0.0.1:3306:3306
-    volumes:
-      - ./data/mariadb:/var/lib/mysql
-    environment:
-      MARIADB_ROOT_PASSWORD: example
