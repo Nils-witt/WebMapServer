@@ -13,7 +13,7 @@ export class OverlayModel extends Model<InferAttributes<OverlayModel>, InferCrea
     declare name: string;
 
     @Attribute(DataTypes.STRING)
-    declare path: string;
+    declare url: string;
     
     @Attribute(DataTypes.INTEGER)
     declare minZoom: number;
@@ -23,4 +23,7 @@ export class OverlayModel extends Model<InferAttributes<OverlayModel>, InferCrea
     
     @Attribute(DataTypes.STRING)
     declare status: string;
+
+    @Attribute(DataTypes.BOOLEAN)
+    declare isRemote: boolean;
 }

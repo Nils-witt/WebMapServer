@@ -5,7 +5,8 @@ import {SyncClient} from "./syncClient";
 import {config} from "./config";
 import {EdpClient} from "./edpClient";
 import {populate, sequelize} from "./Database";
-
+import {Server as WebSocketServer} from "ws";
+import {WebSockerHandler} from "./WebSockerHandler";
 
 applicationLogger.info("Starting server");
 /**
@@ -22,14 +23,10 @@ sequelize.sync().then(() => {
         syncClient.start();
     }
 
-    if (true){
+    if (config.edpSync) {
         edpClient.start();
     }
 })
-
-
-
-
 
 
 const port = normalizePort(process.env.PORT || '3000');
@@ -40,7 +37,7 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
-
+const wsServer = new WebSocketServer({noServer: true});
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -49,6 +46,14 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+
+if (WebSockerHandler.shared == undefined) {
+    WebSockerHandler.shared = new WebSockerHandler(wsServer);
+}
+
+server.on('upgrade', (req, socket, head) => {
+    WebSockerHandler.shared.handleUpgrade(req, socket, head);
+});
 
 /**
  * Normalize a port into a number, string, or false.

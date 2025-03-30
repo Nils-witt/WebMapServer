@@ -73,7 +73,12 @@ map.on('moveend', function () {
     firstLayer = true;
 
     mapsData.forEach(mapInfo => {
-        let mapLayer = L.tileLayer(`/map/${mapInfo["id"]}/${mapInfo["path"]}`, {
+        let url = mapInfo["url"]
+        if (!mapInfo["isRemote"]) {
+            url = `/map/${mapInfo["id"]}/${mapInfo["url"]}`;
+        }
+        
+        let mapLayer = L.tileLayer(url, {
             maxZoom: mapInfo["maxZoom"],
             minZoom: mapInfo["minZoom"],
             attribution: '© BaseMao'
@@ -96,7 +101,7 @@ map.on('moveend', function () {
     let overlayData = await overlayRes.json();
 
     overlayData.forEach(mapInfo => {
-        let mapLayer = L.tileLayer(`/overlay/${mapInfo["id"]}/${mapInfo["path"]}`, {
+        let mapLayer = L.tileLayer(`/overlay/${mapInfo["id"]}${mapInfo["url"]}`, {
             maxZoom: mapInfo["maxZoom"],
             minZoom: mapInfo["minZoom"],
             attribution: '©'
