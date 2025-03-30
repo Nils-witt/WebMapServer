@@ -75,8 +75,7 @@ apiOverlaysRouter.post('/:id/upload', upload.single('datazip'), async (req, res,
     let file = req.file;
     if (file && file.mimetype == 'application/zip') {
 
-        fs.rename(file.path, zipName, (err) => {
-        });
+        fs.renameSync(file.path, zipName);
 
 
         fs.mkdirSync(basedir, {
