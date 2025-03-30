@@ -49,6 +49,8 @@ apiOverlaysRouter.post('/:id', async (req, res, next) => {
     overlay.minZoom = data.minZoom;
     overlay.maxZoom = data.maxZoom;
     overlay.isRemote = data.isRemote;
+    
+    await overlay.save();
     res.json(overlay);
 });
 
