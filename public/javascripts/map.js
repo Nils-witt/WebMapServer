@@ -19,12 +19,7 @@ map.setMinZoom(10);
     
 })();
 
-var layerControl = L.control.layers({}, {}).addTo(map);
-
-new L.Control.SimpleLocate({
-    position: "topleft",
-    className: "button-locate",
-}).addTo(map);
+var layerControl = L.control.layers({}, {},{autoZIndex: false}).addTo(map);
 
 var visibleLayers = [];
 var baseLayerName = localStorage.getItem('baseLayerName');
